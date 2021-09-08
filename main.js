@@ -207,9 +207,7 @@
                 puntajes_jugador1.innerHTML=(Number(puntajes_jugador1.innerHTML)+1);
 
             }
-              
-
-            
+    
             
         },
         play : function()
@@ -266,10 +264,10 @@
             {
             case "rectangle":
                 ctx.fillRect(element.x,element.y,element.width,element.height);
-                ctx.fillStyle = "red";
+                ctx.fillStyle = "black";
                 break;
                 case "circle":
-                    ctx.fillStyle = "blue";
+                    ctx.fillStyle = "white";
                     ctx.beginPath();
                     ctx.arc(element.x, element.y,element.radius,0,7);
                     ctx.fill();
@@ -284,11 +282,11 @@
 
 
 var board = new Board(800, 400);
-var bar_2 = new Bar(740,100,40,100, board);
-var bar = new Bar(20,100,40,100, board);
+var bar_2 = new Bar(740,140,40,100, board);
+var bar = new Bar(20,140,40,100, board);
 var canvas = document.getElementById('canvas');
 var board_view = new BoardView(canvas,board); 
-var ball = new ball(350,150,15,board);
+var ball = new ball(400,190,15,board);
 
 
 document.addEventListener("keydown", function(ev){
