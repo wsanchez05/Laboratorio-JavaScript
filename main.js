@@ -8,12 +8,13 @@
         this.game_over = false;
         this.bars = [];
         this.ball = null;
+        this.playing = false;
     }
 
     //Funciones y Metodosm
     self.Board.prototype = {
         get elements(){
-            var elements = this.bars;
+            var elements = this.bars.map(function(bar){ return bar; });
            elements.push(this.ball);
             return elements;
         }
@@ -85,8 +86,13 @@
         },
         play : function()
         {
-            this.clean();
-            this.draw(); 
+            if(this.board.playing)
+            {
+                this.clean();
+                this.draw();
+                this.board.ball.move();
+            }
+            
         }
     }
 
@@ -116,18 +122,29 @@
         this.x = x;
         this.y = y;
         this.radius = radius;
-        this.speed_x = 0;
+        this.speed_x = 3;
         this.speed_y = 0;
         this.board = board;
+        this.direction = 1;
+
 
         board.ball = this;
         this.kind = "circle";
 
+        
+    },
+    self.ball.prototype = 
+    {
+         move: function()
+         {
+             console.log("Hola");
+            this.x += (this.speed_x * this.direction);
+            this.y += (this.speed_y);
+
+         }
+
     }
-
-}
-
-)();
+})();
 
 var board = new Board(800, 400);
 var bar_2 = new Bar(740,100,40,100, board);
@@ -161,11 +178,17 @@ document.addEventListener("keydown", function(ev){
         //s
         bar_2.down();
     }
+    else if (ev.keyCode == 32)
+    {
+        ev.preventDefault();
+       board.playing = !board.playing;
+    }
 });
 
 
-
+board_view.draw();
 window.requestAnimationFrame(controller);
+
 
 function controller()
 {
