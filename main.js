@@ -155,6 +155,12 @@
 
         check_collisions : function()
         {
+               
+               puntajes_jugador1 = document.querySelector(".puntajeJugador1");
+               puntajes_jugador2 = document.querySelector(".puntajeJugador2");
+
+                this.puntajeMaximo = document.getElementById("puntajeMaximo");
+                console.log(this.puntajeMaximo);
             for (var i = this.board.bars.length - 1; i >=0; i--)
             {
                 var bar = this.board.bars[i];
@@ -162,10 +168,49 @@
                 if(hit(bar, this.board.ball))
                 {
                     this.board.ball.collision(bar);
+                    this.board.ball.speed +=0.5;
 
                 }
                 
             };
+            if(this.board.ball.y <= 15)
+            {
+                this.board.ball.speed_y =this.board.ball.speed_y * -1;
+            }
+            if(this.board.ball.y >= 385)
+            {
+                this.board.ball.speed_y =this.board.ball.speed_y * -1;
+            }
+            if(this.board.ball.x <= -15)
+            {
+                
+                board.playing = !board.playing;
+                this.board.ball.x = 350;
+                this.board.ball.y = 150;
+                this.board.bars.y = 100;
+                alert("perdio jugador 1");
+                this.board.ball.speed=3;
+                board_view.draw();      
+                this.board.ball.speed_x =this.board.ball.speed_x * -1;
+                puntajes_jugador2.innerHTML=(Number(puntajes_jugador2.innerHTML)+1);
+                
+            }
+            if(this.board.ball.x >= 815)
+            {
+                board.playing = !board.playing;
+                this.board.ball.x = 350;
+                this.board.ball.y = 150;
+                alert("perdio jugador 2");
+                this.board.ball.speed=3;
+                board_view.draw();  
+                this.board.ball.speed_x =this.board.ball.speed_x * -1;
+                puntajes_jugador1.innerHTML=(Number(puntajes_jugador1.innerHTML)+1);
+
+            }
+              
+
+            
+            
         },
         play : function()
         {
@@ -221,8 +266,10 @@
             {
             case "rectangle":
                 ctx.fillRect(element.x,element.y,element.width,element.height);
+                ctx.fillStyle = "red";
                 break;
                 case "circle":
+                    ctx.fillStyle = "blue";
                     ctx.beginPath();
                     ctx.arc(element.x, element.y,element.radius,0,7);
                     ctx.fill();
@@ -249,24 +296,24 @@ document.addEventListener("keydown", function(ev){
     if(ev.keyCode == 38)
     {
         ev.preventDefault();
-        bar.up();
+        bar_2.up();
     }
     else if (ev.keyCode == 40)
     {
         ev.preventDefault();
-        bar.down();
+        bar_2.down();
     }
     else if (ev.keyCode == 87)
     {
         ev.preventDefault();
         //W
-        bar_2.up();
+        bar.up();
     }
     else if (ev.keyCode == 83)
     {
         ev.preventDefault();
         //s
-        bar_2.down();
+        bar.down();
     }
     else if (ev.keyCode == 32)
     {
@@ -277,6 +324,7 @@ document.addEventListener("keydown", function(ev){
 
 
 board_view.draw();
+
 window.requestAnimationFrame(controller);
 
 
